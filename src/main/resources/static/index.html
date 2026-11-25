@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KisanSetu</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>KisanSetu</h1>
+    <p class="tagline">KCC claim data checker</p>
+    <div id="userbar" class="userbar hidden">
+      <span id="whoami"></span>
+      <button id="logout" type="button" class="secondary">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page 1: login -->
+    <section id="login-page" class="card">
+      <h2>Log in</h2>
+      <form id="login-form" autocomplete="on">
+        <label>Username <input id="username" name="username" autocomplete="username" required maxlength="100"></label>
+        <label>Password <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200"></label>
+        <button type="submit">Log in</button>
+        <p id="login-error" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <div id="app-pages" class="hidden">
+      <nav class="tabs">
+        <button id="tab-upload" type="button" class="tab active">Upload claims</button>
+        <button id="tab-claims" type="button" class="tab">Claims</button>
+      </nav>
+
+      <!-- Page 2: upload and error report -->
+      <section id="upload-page" class="card">
+        <h2>Upload a claims file</h2>
+        <p class="hint">.xlsx (first sheet) or .csv, up to 5 MB and 5000 rows. Rows without errors are saved as claims; rows with errors are listed below so they can be fixed and uploaded again.</p>
+        <form id="upload-form">
+          <input id="file" type="file" accept=".xlsx,.csv" required>
+          <label class="inline"><input id="dry-run" type="checkbox"> Check only, do not save</label>
+          <button type="submit">Upload</button>
+        </form>
+        <p id="upload-message" class="error" role="alert"></p>
+
+        <div id="result" class="hidden">
+          <h3>Result</h3>
+          <dl id="summary" class="summary"></dl>
+          <button id="download-report" type="button" class="secondary hidden">Download error report (.xlsx)</button>
+          <div class="table-wrap">
+            <table id="errors-table" class="hidden">
+              <thead><tr><th>Row</th><th>Field</th><th>Problem</th><th>Suggested fix</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page 3: claims list -->
+      <section id="claims-page" class="card hidden">
+        <h2>Claims</h2>
+        <div class="filters">
+          <label class="inline">Status
+            <select id="status-filter">
+              <option value="">All</option>
+              <option>PENDING</option>
+              <option>APPROVED</option>
+              <option>REJECTED</option>
+            </select>
+          </label>
+          <span id="page-info"></span>
+          <button id="prev" type="button" class="secondary">Previous</button>
+          <button id="next" type="button" class="secondary">Next</button>
+        </div>
+        <p id="claims-message" class="error" role="alert"></p>
+        <div class="table-wrap">
+          <table id="claims-table">
+            <thead><tr><th>ID</th><th>KCC account</th><th>Farmer</th><th>Type</th><th>Year</th><th>Loan</th><th>Claim</th><th>Status</th><th>Reason</th><th class="admin-only">Change status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

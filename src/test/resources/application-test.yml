@@ -1,0 +1,13 @@
+# Test-only values. Never reuse these anywhere real.
+app:
+  security:
+    encryption-key: ${APP_ENCRYPTION_KEY}
+    hmac-key: ${APP_HMAC_KEY}
+    jwt-secret: ${APP_JWT_SECRET}
+    jwt-ttl-minutes: 60
+  admin:
+    username: ${ADMIN_USERNAME:}
+    password: ${ADMIN_PASSWORD:}
+  twilio:
+    auth-token: ${TWILIO_AUTH_TOKEN:}
+    webhook-url: ${TWILIO_WEBHOOK_URL:}

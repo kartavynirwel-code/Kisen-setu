@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: kisansetu
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:kisansetu}
+    username: ${DB_USERNAME:kisansetu}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Schema is owned by Flyway; Hibernate only verifies entities match it.
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+app:
+  security:
+    # All three are base64 of random bytes (32+). Generate with: openssl rand -base64 32
+    encryption-key: ${APP_ENCRYPTION_KEY}
+    hmac-key: ${APP_HMAC_KEY}
+    jwt-secret: ${APP_JWT_SECRET}
+    jwt-ttl-minutes: 60
+  admin:
+    # Used once, only while the user table is empty
+    username: ${ADMIN_USERNAME:}
+    password: ${ADMIN_PASSWORD:}
+  twilio:
+    auth-token: ${TWILIO_AUTH_TOKEN:}
+    # The exact public URL configured in Twilio for the webhook (it is part of what Twilio signs)
+    webhook-url: ${TWILIO_WEBHOOK_URL:}
